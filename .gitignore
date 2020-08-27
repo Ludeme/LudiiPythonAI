@@ -127,3 +127,14 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+/bin/
+
+# The Ludii.jar file and files it creates
+/libs/Ludii.jar
+/libs/ludii_preferences.json
+/libs/ludii.trl
+/libs/Ludii-javadoc.jar
+
+# Eclipse project files
+.classpath
+.project
