@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="export_jar" name="LudiiPythonAI">
+    <property environment="env"/>
+	
+    <property name="LudiiPythonAI.location" value="."/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="LudiiPythonAI.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="libs/Ludii.jar"/>
+    	<pathelement location="libs/jpy-0.10.0-SNAPSHOT.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    	<delete dir="build"/>
+    </target>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}" compiler="javac1.8" encoding="UTF-8">
+            <src path="src"/>
+            <classpath refid="LudiiPythonAI.classpath"/>
+        </javac>
+    </target>
+	
+	<target name="export_jar" depends="clean,build-project">
+		<mkdir dir="build" />
+		<jar destfile="LudiiPythonAI.jar" basedir="bin" duplicate="preserve">
+			<zipgroupfileset dir="${LudiiPythonAI.location}/libs" includes="**/*.jar" >
+				<exclude name="Ludii.jar" />
+				<exclude name="Ludii-javadoc.jar" />
+			</zipgroupfileset>
+		</jar>
+	</target>
+</project>

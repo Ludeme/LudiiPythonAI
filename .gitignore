@@ -135,6 +135,18 @@ dmypy.json
 /libs/ludii.trl
 /libs/Ludii-javadoc.jar
 
+# The JPY jar file
+/libs/jpy-0.10.0-SNAPSHOT.jar
+
+# JPY config properties
+/libs/jpyconfig.properties
+
 # Eclipse project files
 .classpath
 .project
+
+# PyCharm project files
+.idea
+
+# The JAR file we build
+LudiiPythonAI.jar
