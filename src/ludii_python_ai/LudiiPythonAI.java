@@ -2,7 +2,6 @@ package ludii_python_ai;
 
 import java.io.File;
 import java.net.URL;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
 
 import org.jpy.PyLib;
@@ -10,11 +9,9 @@ import org.jpy.PyModule;
 import org.jpy.PyObject;
 
 import game.Game;
-import main.collections.FastArrayList;
 import util.AI;
 import util.Context;
 import util.Move;
-import utils.AIUtils;
 
 /**
  * Example Java wrapper for a Ludii AI implemented in Python
@@ -60,15 +57,13 @@ public class LudiiPythonAI extends AI
 		final int maxDepth
 	)
 	{
-		FastArrayList<Move> legalMoves = game.moves(context).moves();
-		
-		// If we're playing a simultaneous-move game, some of the legal moves may be 
-		// for different players. Extract only the ones that we can choose.
-		if (!game.isAlternatingMoveGame())
-			legalMoves = AIUtils.extractMovesForMover(legalMoves, player);
-		
-		final int r = ThreadLocalRandom.current().nextInt(legalMoves.size());
-		return legalMoves.get(r);
+		return (Move) pythonAI.call
+		(
+			"select_action", game, context, 
+			Double.valueOf(maxSeconds), 
+			Integer.valueOf(maxIterations), 
+			Integer.valueOf(maxDepth)
+		).getObjectValue();
 	}
 	
 	@Override
@@ -100,11 +95,10 @@ public class LudiiPythonAI extends AI
 			initialisedJpy = true;
 		}		
 		
-		// Get the UCT class from Python
-		final PyObject pythonUctClass = ludiiPythonModule.getAttribute("UCT");
-		
-		// Instantiate a new AI (implemented in Python)
+		// Instantiate a new AI (implemented in the Python class "UCT")
 		pythonAI = ludiiPythonModule.call("UCT");
+		
+		pythonAI.call("init_ai", game, Integer.valueOf(playerID));
 	}
 	
 	//-------------------------------------------------------------------------
