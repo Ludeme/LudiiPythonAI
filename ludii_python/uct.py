@@ -129,10 +129,8 @@ class UCT:
                              None,
                              -1.0,
                              None,
-                             None,
                              0,
                              -1,
-                             0.0,
                              None)
 
             # This computes utilities for all players at the of the playout,
