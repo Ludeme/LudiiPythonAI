@@ -9,9 +9,10 @@ import org.jpy.PyModule;
 import org.jpy.PyObject;
 
 import game.Game;
-import util.AI;
-import util.Context;
-import util.Move;
+import other.AI;
+import other.context.Context;
+import other.move.Move;
+
 
 /**
  * Example Java wrapper for a Ludii AI implemented in Python
