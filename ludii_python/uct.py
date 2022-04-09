@@ -140,7 +140,7 @@ class UCT:
             # Backpropagate utilities through the tree
             while current is not None:
                 current.visit_count += 1
-                for p in range(1, num_players):
+                for p in range(1, num_players+1):
                     current.score_sums[p] += utils[p]
                 current = current.parent
 
